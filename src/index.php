@@ -1,19 +1,15 @@
 <?php
   require_once 'models/Usuario.php';
   require_once 'models/Zapatos.php';
+  require_once 'validate.php';
 
-  session_start();
-
-  if (isset($_SESSION['user'])) {
-    $token = $_SESSION['user'];
-    $usr = Usuario::getUserByToken($token);
-
-    if (!$usr->isCliente()) {
-      require_once 'views/403.php';
-      exit();
-    }
-  } else {
-    header('Location: login.php');
+  if (!isAuth()) {
+    header('Location: /src/login.php');
+  }
+  
+  if(!isCliente()) {
+    echo "403";
+    exit();
   }
 
   $zapatos = Zapato::getAllZapatos();

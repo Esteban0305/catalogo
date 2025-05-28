@@ -1,29 +1,25 @@
 <?php
   require_once 'models/Usuario.php';
-
-  session_start();
-
-  if (isset($_SESSION['user'])) {
-    $token = $_SESSION['user'];
-    $usr = Usuario::getUserByToken($token);
-    header('Location: index.php');
-    exit();
+  require_once 'validate.php';
+  
+  if (isAuth()) {
+    header('Location: /src/index.php');
   }
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // Get the email and password from the form
-      $email = $_POST['email'];
-      $password = $_POST['password'];
+    // Get the email and password from the form
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-      $log = Usuario::login($email, $password);
+    $log = Usuario::login($email, $password);
 
-      if ($log) {
-          $_SESSION['user'] = $log->getToken();
-          header('Location: index.php');
-          exit();
-      } else {
-          echo "<script>alert('Correo o contraseña incorrectos.');</script>";
-      }
+    if ($log) {
+        $_SESSION['user'] = $log->getToken();
+        header('Location: index.php');
+        exit();
+    } else {
+        echo "<script>alert('Correo o contraseña incorrectos.');</script>";
+    }
   }
 ?>
 <!DOCTYPE html>

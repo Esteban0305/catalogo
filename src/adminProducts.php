@@ -1,19 +1,10 @@
 <?php
   require_once 'models/Usuario.php';
   require_once 'models/Zapatos.php';
+  require_once 'validate.php';
 
-  session_start();
-
-  if (isset($_SESSION['user'])) {
-    $token = $_SESSION['user'];
-    $usr = Usuario::getUserByToken($token);
-
-    if (!$usr->isAdminZapatos()) {
-      require_once 'views/403.php';
-      exit();
-    }
-  } else {
-    header('Location: login.php');
+  if (!isAdminProductos()) {
+    header('Location: /src/login.php');
   }
 
   $zapatos = Zapato::getAllZapatos();

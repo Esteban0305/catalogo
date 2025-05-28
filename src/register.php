@@ -1,5 +1,10 @@
 <?php
   require_once 'models/Usuario.php';
+  require_once 'validate.php';
+  
+  if (isAuth()) {
+    header('Location: /src/index.php');
+  }
 
   // Check if the form is submitted
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
