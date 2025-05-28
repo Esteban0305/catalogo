@@ -15,8 +15,18 @@
       unset($_SESSION['last-zapato']);
     }
   }
+  
+  function alertaDelZapato() {
+    if (isset($_SESSION['del-zapato'])) {
+      echo 'Zapato eliminado';
+      unset($_SESSION['del-zapato']);
+    }
+  }
 
+  // TODO: Alertas bien
   alertaNuevoZapato();
+  // TODO: Alertas eliminación bien
+  alertaDelZapato();
 ?>
 
 <!DOCTYPE html>
@@ -44,8 +54,7 @@
         echo "<div>";
         echo "<h2>" . htmlspecialchars($zapato->nombre) . "</h2>";
         echo "<p>Precio: $" . htmlspecialchars($zapato->precio) . "</p>";
-        echo "<a href='zapato/zapato.php?id=" . $zapato->id_zapato . "'>Editar</a> | ";
-        echo "<a href='zapato/eliminar_zapato.php?id=" . $zapato->id_zapato . "'>Eliminar</a>";
+        echo "<a href='zapato/zapato.php?id=" . $zapato->id_zapato . "'>Editar</a>";
         echo "</div>";
       }
     ?>

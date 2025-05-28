@@ -27,6 +27,21 @@
       return $zapatos;
     }
 
+    static function getZapatoById($id_zapato){
+      $query = 'SELECT * FROM zapatos WHERE id_zapato = :id_zapato;';
+      $stmt = Database::getInstance()->getConnection()->prepare($query);
+      $stmt->bindParam(':id_zapato', $id_zapato);
+      $stmt->execute();
+      $zapatos = [];
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $zapatos[] = new Zapato($row['id_zapato'], $row['nombre'], /* $row['id_marca'], $row['id_categoria'], */ $row['precio']);
+      }
+      if (count($zapatos) == 0) {
+        return false;
+      }
+      return $zapatos[0];
+    }
+
     static function register($nombre, $precio) {
       try {
         $query = "INSERT INTO zapatos (nombre, precio) VALUES (:nombre, :precio)";
@@ -39,6 +54,42 @@
           return new Zapato(Database::getInstance()->getConnection()->lastInsertId(), $nombre, /* null, null, */ $precio);
         } else {
           return "Error al registrar el zapato: " . implode(", ", $stmt->errorInfo());
+        }
+      } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+      }
+    }
+
+    static function update($id_zapato, $nombre, $precio) {
+      try {
+        $query = "UPDATE zapatos SET nombre = :nombre, precio = :precio WHERE id_zapato = :id_zapato";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':precio', $precio);
+        $stmt->bindParam(':id_zapato', $id_zapato);
+        $result = $stmt->execute();
+
+        if ($result) {
+          return true;
+        } else {
+          return "Error al registrar el zapato: " . implode(", ", $stmt->errorInfo());
+        }
+      } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+      }
+    }
+
+    static function delete($id_zapato) {
+      try {
+        $query = "DELETE FROM zapatos WHERE id_zapato = :id_zapato";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(':id_zapato', $id_zapato);
+        $result = $stmt->execute();
+
+        if ($result) {
+          return true;
+        } else {
+          return "Error al eliminar el zapato: " . implode(", ", $stmt->errorInfo());
         }
       } catch (Exception $e) {
         return "Error: " . $e->getMessage();
