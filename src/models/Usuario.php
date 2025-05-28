@@ -117,5 +117,46 @@
     public function isCliente() {
       return in_array(self::$CLIENTE, $this->role);
     }
+
+    static function getAllUsuarios() {
+      try {
+        $query = "SELECT * FROM usuarios";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->execute();
+        $usuarios = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          $usuario = new Usuario($row['correo']);
+          $usuario->id_usuario = $row['id_usuario'];
+          $usuario->role = explode(',', $row['roles']);
+          $usuarios[] = $usuario;
+        }
+
+        return $usuarios;
+      } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+      }
+    }
+
+    static function getUsuarioById($id_usuario) {
+      try {
+        $query = "SELECT * FROM usuarios WHERE id_usuario = :id_usuario";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(':id_usuario', $id_usuario);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+          $usuario = new Usuario($row['correo']);
+          $usuario->id_usuario = $row['id_usuario'];
+          $usuario->role = explode(',', $row['roles']);
+          return $usuario;
+        } else {
+          return null;
+        }
+      } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+      }
+    }
   }
 ?>
