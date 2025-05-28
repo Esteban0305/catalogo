@@ -20,8 +20,9 @@
 
     if ($zapato instanceof Zapato) {
       $_SESSION['last-zapato'] = $zapato->id_zapato;
+      header('Location: ../adminProducts.php');
     } else {
-      throw Error('No zapato');
+      echo "No zapato";
     }
   }
 ?>

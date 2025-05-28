@@ -8,6 +8,15 @@
   }
 
   $zapatos = Zapato::getAllZapatos();
+
+  function alertaNuevoZapato() {
+    if (isset($_SESSION['last-zapato'])) {
+      echo 'Nuevo Zapato agregado';
+      unset($_SESSION['last-zapato']);
+    }
+  }
+
+  alertaNuevoZapato();
 ?>
 
 <!DOCTYPE html>
