@@ -7,7 +7,6 @@
       $usr = Usuario::getUserByToken($token);
   
       if ($usr instanceof Usuario) {
-        $USER = $usr;
         return true;
       }
     }
