@@ -42,6 +42,9 @@
       <?php if (isAdminUsuarios()): ?>
         <a href="adminUsers.php" class="text-blue-600 hover:underline font-medium">Usuarios</a>
       <?php endif; ?>
+      <?php if (isCliente()): ?>
+        <a href="index.php" class="text-blue-600 hoverd:underline font-medium">Catálogo</a>
+      <?php endif; ?>
       <a href="logout.php" class="text-red-600 hover:underline font-medium">Cerrar sesión</a>
       <a href="" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition"><?php echo count($wishlist); ?> Wishlist</a>
     </nav>
