@@ -6,8 +6,17 @@
     header('Location: /src/index.php');
   }
 
+  // print_r($_SESSION);
+
+  if (isset($_SESSION['blocked']) && time() < $_SESSION['blocked']) {
+    header("HTTP/1.1 403 Forbidden");
+    include 'views/403.php';
+    exit();
+  }
+
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // TODO: Validar que el email y el password estén
+    // TODO: Bloquear después de 5 intentos fallidos
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -29,7 +38,22 @@
       }
       exit();
     } else {
-      $_SESSION['error'] = 'Correo electrónico o contraseña incorrectos.';
+      if (!isset($_SESSION['intento'])) {
+        $_SESSION['intento'] = 0;
+      }
+      $_SESSION['intento']++;
+      
+      if ($_SESSION['intento'] == 5) {
+        // Bloquear al usuario después de 5 intentos fallidos
+        session_destroy();
+        session_start();
+        $_SESSION['blocked'] = time() + 60;
+        $_SESSION['intento'] = 0;
+        $_SESSION['error'] = 'Demasiados intentos fallidos. Por favor, inténtalo más tarde.';
+      } else {
+        $_SESSION['error'] = 'Correo electrónico o contraseña incorrectos.';
+      }
+
     }
   }
 ?>
