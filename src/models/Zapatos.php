@@ -95,5 +95,42 @@
         return "Error: " . $e->getMessage();
       }
     }
+
+    public static function getZapatosDeWishlist($id_usuario) {
+      $query = "SELECT z.* FROM wishlist w JOIN zapatos z ON w.id_zapato = z.id_zapato WHERE w.id_usuario = :id_usuario";
+      $stmt = Database::getInstance()->getConnection()->prepare($query);
+      $stmt->bindParam(':id_usuario', $id_usuario);
+      $stmt->execute();
+      $zapatos = [];
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $zapatos[] = new Zapato($row['id_zapato'], $row['nombre'], /* $row['id_marca'], $row['id_categoria'], */ $row['precio']);
+      }
+      return $zapatos;
+    }
+
+    public static function addToWishlist($id_usuario, $id_zapato) {
+      try {
+        $query = "INSERT INTO wishlist (id_usuario, id_zapato) VALUES (:id_usuario, :id_zapato)";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(':id_usuario', $id_usuario);
+        $stmt->bindParam(':id_zapato', $id_zapato);
+        return $stmt->execute();
+      } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+      }
+    }
+
+    public static function removeFromWishlist($id_usuario, $id_zapato) {
+      try {
+        $query = "DELETE FROM wishlist WHERE id_zapato = :id_zapato AND id_usuario = :id_usuario";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(':id_zapato', $id_zapato);
+        $stmt->bindParam(':id_usuario', $id_usuario);
+        return $stmt->execute();
+      } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+      }
+    }
+
   }
 ?>

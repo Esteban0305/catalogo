@@ -1,5 +1,6 @@
 <?php
   require_once __DIR__ . '/../db/db.php';
+  require_once __DIR__ . '/../models/Zapatos.php';
 
   class Usuario {
     public $id_usuario;
@@ -178,6 +179,23 @@
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->bindParam(':id_usuario', $id_usuario);
         return $stmt->execute();
+      } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+      }
+    }
+
+    static function getWishList($id_usuario) {
+      try {
+        $query = "SELECT * FROM wishlist WHERE id_usuario = :id_usuario";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(':id_usuario', $id_usuario);
+        $stmt->execute();
+        $wishlist = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          $wishlist[] = Zapato::getZapatoById($row['id_zapato']);
+        }
+        return $wishlist;
       } catch (Exception $e) {
         return "Error: " . $e->getMessage();
       }
