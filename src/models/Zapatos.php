@@ -81,6 +81,10 @@
 
     static function delete($id_zapato) {
       try {
+        $query = "DELETE FROM wishlist WHERE id_zapato = :id_zapato";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(':id_zapato', $id_zapato);
+        $result = $stmt->execute();
         $query = "DELETE FROM zapatos WHERE id_zapato = :id_zapato";
         $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->bindParam(':id_zapato', $id_zapato);
