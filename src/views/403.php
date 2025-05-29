@@ -1,3 +1,7 @@
+<?php
+  include_once 'validate.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,6 +19,10 @@
        class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition">
       Volver al inicio
     </a>
+
+    <?php if (isAuth()): ?>
+      <p class="mt-4 text-gray-500">O <a href="/src/logout.php" class="text-blue-600 hover:underline">Cerrar sesión</a></p>
+    <?php endif; ?>
   </div>
 </body>
 </html>

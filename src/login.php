@@ -32,9 +32,7 @@
         header('Location: adminProducts.php');
       }
 
-      if($log->isCliente()) {
-        header('Location: index.php');
-      }
+      header('Location: index.php');
       unset($_SESSION['intento']);
       exit();
     } else {

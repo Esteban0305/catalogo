@@ -12,7 +12,7 @@
   if(!isset($_GET['id'])) {
     // TODO: Definir página de error
     header("HTTP/1.1 404 NOT FOUND");
-    echo "No zapato ID";
+    include '../views/404.html';
     exit();
   }
 
@@ -37,8 +37,8 @@
   $zapato = Zapato::getZapatoById($id_zapato);
 
   if(!$zapato instanceof Zapato) {
-    // TODO: Mostrar 404
-    echo "No zapato";
+    header("HTTP/1.1 404 NOT FOUND");
+    include '../views/404.html';
     exit();
   }
 ?>
