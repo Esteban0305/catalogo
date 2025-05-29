@@ -158,5 +158,29 @@
         return "Error: " . $e->getMessage();
       }
     }
+
+    static function updateUsuario($usuario) {
+      try {
+        $query = "UPDATE usuarios SET roles = :roles WHERE id_usuario = :id_usuario";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $roles = implode(',', $usuario->role);
+        $stmt->bindParam(':roles', $roles);
+        $stmt->bindParam(':id_usuario', $usuario->id_usuario);
+        return $stmt->execute();
+      } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+      }
+    }
+
+    static function deleteUsuario($id_usuario) {
+      try {
+        $query = "DELETE FROM usuarios WHERE id_usuario = :id_usuario";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->bindParam(':id_usuario', $id_usuario);
+        return $stmt->execute();
+      } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+      }
+    }
   }
 ?>
