@@ -56,6 +56,9 @@
       <?php if (isAdminUsuarios()): ?>
         <a href="adminUsers.php" class="text-blue-600 hover:underline font-medium">Usuarios</a>
       <?php endif; ?>
+      <?php if (isCliente()): ?>
+        <a href="index.php" class="text-blue-600 hover:underline font-medium">Catálogo</a>
+      <?php endif; ?>
       <a href="logout.php" class="text-red-600 hover:underline font-medium">Cerrar sesión</a>
     </nav>
   </header>

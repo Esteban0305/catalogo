@@ -49,6 +49,9 @@
       <?php if (isAdminProductos()): ?>
         <a href="adminProducts.php" class="text-blue-600 hover:underline font-medium">Productos</a>
       <?php endif; ?>
+      <?php if (isCliente()): ?>
+        <a href="index.php" class="text-blue-600 hover:underline font-medium">Catálogo</a>
+      <?php endif; ?>
       <a href="logout.php" class="text-red-600 hover:underline font-medium">Cerrar sesión</a>
     </nav>
   </header>

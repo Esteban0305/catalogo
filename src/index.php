@@ -23,7 +23,15 @@
 <body class="bg-gray-100 min-h-screen flex flex-col">
   <header class="bg-white shadow-md p-4 flex justify-between items-center">
     <h1 class="text-xl font-bold text-gray-800">Bienvenido a la Zapatería</h1>
-    <a href="logout.php" class="text-red-500 hover:underline font-semibold">Cerrar sesión</a>
+    <nav class="space-x-4">
+      <?php if (isAdminProductos()): ?>
+        <a href="adminProducts.php" class="text-blue-600 hover:underline font-medium">Productos</a>
+      <?php endif; ?>
+      <?php if (isAdminUsuarios()): ?>
+        <a href="adminUsers.php" class="text-blue-600 hover:underline font-medium">Usuarios</a>
+      <?php endif; ?>
+      <a href="logout.php" class="text-red-600 hover:underline font-medium">Cerrar sesión</a>
+    </nav>
   </header>
 
   <main class="flex-grow p-6">
