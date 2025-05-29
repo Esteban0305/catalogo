@@ -3,7 +3,9 @@
   require_once 'validate.php';
 
   if (!isAdminUsuarios()) {
-    header('Location: /src/login.php');
+    header("HTTP/1.1 403 Forbidden");
+    include 'views/403.php';
+    exit();
   }
 
   $usuarios = Usuario::getAllUsuarios();
@@ -11,12 +13,22 @@
 
   function alertaDelUsuario() {
     if (isset($_SESSION['del-usuario'])) {
-      if ($_SESSION['del-usuario'] == true) {
-        echo "<p>Usuario eliminado correctamente.</p>";
-      } else {
-        echo "<p>Error al eliminar el usuario.</p>";
-      }
+      echo '<div class="toast fixed bottom-5 right-5 bg-red-500 text-white px-6 py-4 rounded-lg shadow-lg opacity-95 animate-slide-in-out">
+              Usuario eliminado correctamente.
+            </div>';
       unset($_SESSION['del-usuario']);
+    }
+  }
+
+  function alertaUpdUsuario(){
+    if (isset($_SESSION['upd-usuario'])) {
+      if (isset($_SESSION['upd-usuario'])) {
+        echo '<div class="toast fixed bottom-5 right-5 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg opacity-95 animate-slide-in-out">
+                Usuario actualizado correctamente.
+              </div>';
+        unset($_SESSION['upd-usuario']);
+      }
+      unset($_SESSION['upd-usuario']);
     }
   }
 ?>
@@ -30,6 +42,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
+  <?php alertaUpdUsuario(); alertaDelUsuario(); ?>
   <header class="bg-white shadow p-4 flex justify-between items-center">
     <h1 class="text-2xl font-bold text-gray-800">Administración de Usuarios</h1>
     <nav class="space-x-4">
@@ -62,5 +75,24 @@
       <?php endforeach; ?>
     </div>
   </main>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          keyframes: {
+            'slide-in-out': {
+              '0%': { transform: 'translateX(100%)', opacity: '0' },
+              '10%': { transform: 'translateX(0)', opacity: '1' },
+              '85%': { transform: 'translateX(0)', opacity: '1' },
+              '100%': { transform: 'translateX(100%)', opacity: '0' },
+            }
+          },
+          animation: {
+            'slide-in-out': 'slide-in-out 8s ease forwards',
+          }
+        }
+      }
+    }
+  </script>
 </body>
 </html>

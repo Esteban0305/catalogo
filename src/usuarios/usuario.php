@@ -3,10 +3,11 @@
   require_once '../validate.php';
 
   if (!isAdminUsuarios()) {
-    header('Location: /src/login.php');
+    header("HTTP/1.1 403 Forbidden");
+    include '../views/403.php';
     exit();
   }
-
+  
   if (!isset($_GET['id'])) {
     // TODO: Error 400
     echo "ID de usuario no proporcionado.";
@@ -15,11 +16,12 @@
   
   $id_usuario = $_GET['id'];
   $usuario = Usuario::getUsuarioById($id_usuario);
-
-  // if(!$usuario instanceof Usuario) {
-  //   echo "Usuario no encontrado.";
-  //   exit();
-  // }
+  
+  if(!$usuario instanceof Usuario) {
+    header("HTTP/1.1 404 Not Found");
+    include '../views/404.html';
+    exit();
+  }
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $roles = [];
@@ -43,10 +45,8 @@
     $result = Usuario::updateUsuario($usuario);
 
     if ($result === true) {
-      // TODO: Alerta usuario actualizado
-      echo "<p>Usuario actualizado correctamente.</p>";
-    } else {
-      echo "<p>Error al actualizar el usuario: $result</p>";
+      $_SESSION['upd-usuario'] = true;
+      header('Location: ../adminUsers.php');
     }
   }
 

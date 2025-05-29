@@ -4,13 +4,14 @@
   require_once '../validate.php';
 
   if (!isAdminProductos()) {
-    // TODO: Error 403
-    header('Location: /src/login.php');
+    header("HTTP/1.1 403 Forbidden");
+    include '../views/403.php';
     exit();
   }
-
+  
   if(!isset($_GET['id'])) {
     // TODO: Definir página de error
+    header("HTTP/1.1 404 NOT FOUND");
     echo "No zapato ID";
     exit();
   }

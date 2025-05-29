@@ -11,7 +11,7 @@
     <h1 class="text-7xl font-bold text-blue-600 mb-4">403</h1>
     <p class="text-xl text-gray-700 mb-6">Acceso denegado</p>
     <p class="text-gray-600 mb-8">No tienes permiso para acceder a esta página.</p>
-    <a href="/src/index.php"
+    <a href="/src/login.php"
        class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition">
       Volver al inicio
     </a>

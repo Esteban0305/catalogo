@@ -4,13 +4,14 @@
   require_once '../validate.php';
 
   if (!isAdminProductos()) {
-    // TODO: Error 403
-    header('Location: /src/login.php');
+    header("HTTP/1.1 403 Forbidden");
+    include '../views/403.php';
+    exit();
   }
 
   if(!isset($_GET['id'])) {
-    // TODO: Definir página de error
-    echo "No zapato ID";
+    header("HTTP/1.1 404 NOT FOUND");
+    include '../views/404.html';
     exit();
   }
 
@@ -18,8 +19,8 @@
   $zapato = Zapato::getZapatoById($id_zapato);
 
   if(!$zapato instanceof Zapato) {
-    // TODO: Mostrar 404
-    echo "No zapato";
+    header("HTTP/1.1 404 Not Found");
+    include '../views/404.html';
     exit();
   }
 

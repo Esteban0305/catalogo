@@ -3,12 +3,9 @@
   require_once 'models/Zapatos.php';
   require_once 'validate.php';
 
-  if (!isAuth()) {
-    header('Location: /src/login.php');
-  }
-  
   if(!isCliente()) {
-    echo "403";
+    header("HTTP/1.1 403 Forbidden");
+    include 'views/403.php';
     exit();
   }
 

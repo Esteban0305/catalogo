@@ -3,12 +3,13 @@
   require_once '../validate.php';
 
   if (!isAdminUsuarios()) {
-    header('Location: /src/login.php');
+    header("HTTP/1.1 403 Forbidden");
+    include '../views/403.php';
     exit();
   }
   if (!isset($_GET['id'])) {
-    // TODO: Error 404
-    echo "ID de usuario no proporcionado.";
+    header("HTTP/1.1 404 Not Found");
+    include '../views/404.html';
     exit();
   }
 
@@ -16,8 +17,8 @@
 
   $usuario = Usuario::getUsuarioById($id_usuario);
   if (!$usuario instanceof Usuario) {
-    // TODO: Error 404
-    echo "Usuario no encontrado.";
+    header("HTTP/1.1 404 Not Found");
+    include '../views/404.html';
     exit();
   }
 

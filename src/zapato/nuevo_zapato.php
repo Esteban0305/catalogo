@@ -5,7 +5,9 @@
   require_once '../validate.php';
 
   if (!isAdminProductos()) {
-    header('Location: /src/login.php');
+    header("HTTP/1.1 403 Forbidden");
+    include '../views/403.php';
+    exit();
   }
 
   // Nuevo Zapato
