@@ -16,7 +16,6 @@
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // TODO: Validar que el email y el password estén
-    // TODO: Bloquear después de 5 intentos fallidos
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -36,6 +35,7 @@
       if($log->isCliente()) {
         header('Location: index.php');
       }
+      unset($_SESSION['intento']);
       exit();
     } else {
       if (!isset($_SESSION['intento'])) {
