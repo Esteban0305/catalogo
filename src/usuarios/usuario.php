@@ -55,25 +55,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Usuario</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Editar Usuario</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <p><pre><?php echo $usuario->email ?><pre></p>
-  <form action="" method="POST">
-    <input type="hidden" name="id_usuario" value="<?php echo $usuario->id_usuario; ?>">
-    <input type="checkbox" name="cliente" value="cliente" id="cliente" <?php echo in_array(Usuario::$CLIENTE, $usuario->role) ? 'checked' : ''; ?>>
-    <label for="cliente">Cliente</label>
-    <input type="checkbox" name="adminUsuarios" value="adminUsuarios" id="adminUsuarios" <?php echo in_array(Usuario::$ADMIN_USUARIOS, $usuario->role) ? 'checked' : ''; ?>>
-    <label for="adminUsuarios">Administrador de Usuarios</label>
-    <input type="checkbox" name="adminZapatos" value="adminZapatos" id="adminZapatos" <?php echo in_array(Usuario::$ADMIN_ZAPATOS, $usuario->role) ? 'checked' : ''; ?>>
-    <label for="adminZapatos">Administrador de Zapatos</label>
-    <button type="submit">Guardar</button>
-    <a href="../adminUsers.php">Volver a la lista de usuarios</a>
-    <?php
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white shadow-md rounded-2xl p-8 w-full max-w-md">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Editar Usuario</h2>
 
-    ?>
-  </form>
+    <p class="mb-4 text-gray-600 text-center font-mono"><?php echo htmlspecialchars($usuario->email); ?></p>
+
+    <form action="" method="POST" class="space-y-6">
+      <input type="hidden" name="id_usuario" value="<?php echo htmlspecialchars($usuario->id_usuario); ?>" />
+
+      <div class="flex items-center space-x-3">
+        <input type="checkbox" name="cliente" value="cliente" id="cliente"
+          <?php echo in_array(Usuario::$CLIENTE, $usuario->role) ? 'checked' : ''; ?>
+          class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" />
+        <label for="cliente" class="text-gray-700 font-medium">Cliente</label>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <input type="checkbox" name="adminUsuarios" value="adminUsuarios" id="adminUsuarios"
+          <?php echo in_array(Usuario::$ADMIN_USUARIOS, $usuario->role) ? 'checked' : ''; ?>
+          class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" />
+        <label for="adminUsuarios" class="text-gray-700 font-medium">Administrador de Usuarios</label>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <input type="checkbox" name="adminZapatos" value="adminZapatos" id="adminZapatos"
+          <?php echo in_array(Usuario::$ADMIN_ZAPATOS, $usuario->role) ? 'checked' : ''; ?>
+          class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" />
+        <label for="adminZapatos" class="text-gray-700 font-medium">Administrador de Zapatos</label>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <button type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition">
+          Guardar
+        </button>
+        <a href="../adminUsers.php" class="text-blue-600 hover:underline font-semibold">Volver a la lista de usuarios</a>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
